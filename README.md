@@ -6,7 +6,8 @@ installation (synology):
 2) checked the absolute path of the jackettrssrenamer.php
 3) in "Task Scheduler", create a scheduled task, enter user-defined script: php [absolute path]
    eg. php /volume1/web/jackett-rss-renamer/jackettrssrenamer.php
-4) Open Dictionay.csv edit it for your needs (first col is FIND, second col is REPLACE)
-5) run it in task scheduler
-6) open [server ip]/jackett-rss-renamer/jackettrssrenamer.php to see your rss feed for use in Sonarr
+4) Edit jackettrssrenamer.php custom config, input your [server ip][jackett api key][category]
+5) Edit Dictionay.csv edit it for your needs (first col is FIND, second col is REPLACE)
+6) run it in task scheduler
+7) open [server ip]/jackett-rss-renamer/jackettrssrenamer.php to see your rss feed for use in Sonarr
    eg. http://192.168.1.100/jackett-rss-renamer/jackettrssrenamer.php
