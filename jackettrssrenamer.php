@@ -4,12 +4,21 @@ $jackettip = '192.168.1.100'; //eg. '192.168.1.100'
 $jackettapikey = ''; //jacket api key
 $category = '5070'; //eg '5070'
 //-----custom config-----//
-
+$jackettrsslink = 'http://'.$jackettip.':9117/api/v2.0/indexers/dmhy/results/torznab/api?apikey='.$jackettapikey.'&t=search&cat='.$category.'&limit=500&q=';
 //------sample release source-----//
+$ktxp = urlencode("極影")."+BIG5";
+$Nekomoe = urlencode("喵萌奶茶屋")."+".urlencode("繁");
+$UHA = urlencode("悠哈")."+CHT";
+$DMG = urlencode("動漫國")."+".urlencode("繁");
+
 $releasegroups = array(
 	"All" => "",
 	"Lilith" => "Lilith",
-	"MMSUB" => "MMSUB"
+	"MMSUB" => "MMSUB",
+	"極影" => $ktxp,
+	"喵萌奶茶屋" => $Nekomoe,
+	"UHA" => $UHA,
+	"DMG" => $DMG
 );
 
 //-----Dictionary import-----//
@@ -31,7 +40,6 @@ foreach($Dictionary as $find => $replace){
 echo "<br>";*/
 
 //-----Start renamer each release group-----//
-$jackettrsslink = 'http://'.$jackettip.':9117/api/v2.0/indexers/dmhy/results/torznab/api?apikey='.jackettapikey.'&t=search&cat='.$category.'&limit=500&q=';
 echo "Revised RSS URL<br>";
 foreach ($releasegroups as $releasegroup => $q){
 	$count = 0;
