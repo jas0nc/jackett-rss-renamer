@@ -6,18 +6,18 @@ $category = '5070'; //eg '5070'
 //-----custom config-----//
 $jackettrsslink = 'http://'.$jackettip.':9117/api/v2.0/indexers/dmhy/results/torznab/api?apikey='.$jackettapikey.'&t=search&cat='.$category.'&limit=500&q=';
 //------sample release source-----//
-$ktxp = urlencode("極影")."+BIG5";
-$Nekomoe = urlencode("喵萌奶茶屋")."+".urlencode("繁");
-$UHA = urlencode("悠哈")."+CHT";
+$Nekomoe = urlencode("喵萌奶茶屋")."+".urlencode("繁")."+1080p";
+$UHA = urlencode("悠哈")."+CHT+1080p";
 $DMG = urlencode("動漫國")."+".urlencode("繁");
+$ktxp = urlencode("極影")."+BIG5";
 
 $releasegroups = array(
 	"All" => "",
 	"Lilith" => "Lilith",
 	"MMSUB" => "MMSUB",
-	"極影" => $ktxp,
-	"喵萌奶茶屋" => $Nekomoe,
+	"Nekomoe" => $Nekomoe,
 	"UHA" => $UHA,
+	"極影" => $ktxp,
 	"DMG" => $DMG
 );
 
@@ -49,9 +49,23 @@ foreach ($releasegroups as $releasegroup => $q){
 	//-----Check jackett is running-----//
 	if(empty($html)){echo "cannot get source rss from jackett: ".$url; exit;}
 
+	//-----release group formating-----//
+	if($releasegroup == "Lilith"){
+		$html = preg_replace('/\[Lilith\-Raws\]\s(.*\/)\s/', '[Lilith-Raws] ', $html);
+	}
+	if($releasegroup == "MMSUB"){
+		$html = preg_replace('/\【MMSUB\】(.*\/)\s/', '[MMSUB] ', $html);
+	}
+	if($releasegroup == "UHA"){
+		$html = preg_replace('/\【悠哈璃羽字幕社\】\[.*\_(.*\]\[\d)/', '[UHA-WINGS] $1', $html);
+		$html = preg_replace('/\【悠哈璃羽字幕社\】\[.*\/(.*\]\[\d)/', '[UHA-WINGS] $1', $html);
+	}
+	if($releasegroup == "Nekomoe"){
+		$html = preg_replace('/\【喵萌奶茶屋\】.*\★\[.*\/(.*\]\[\d)/', '[Nekomoekissaten] $1', $html);
+		$html = preg_replace('/\【喵萌奶茶屋\】.*\★\[(.*\]\[\d)/', '[Nekomoekissaten] $1', $html);
+	}
+
 	//-----Sereise Name replacement-----//
-	$html = preg_replace('/\[Lilith\-Raws\]\s(.*\/)\s/', '[Lilith-Raws] ', $html);			//"[Lilith-Raws] XXXXX / "  => "[Lilith-Raws]  "
-	$html = preg_replace('/\【MMSUB\】(.*\/)\s/', '[MMSUB] ', $html);			//"[MMSUB] XXXXX / "  => "[Lilith-Raws]  "
 	foreach($Dictionary as $find => $replace){
 		$html = str_replace($find,$replace,$html);
 		}
